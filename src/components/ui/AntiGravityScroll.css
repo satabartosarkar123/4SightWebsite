@@ -1,68 +1,81 @@
 /* ========================================
-   ANTI-GRAVITY SCROLL SYSTEM
-   Premium depth-based section transitions
+   ANTI-GRAVITY SCROLL SYSTEM - SMOOTH
+   Continuous scroll-driven depth transitions
    ======================================== */
 
-.antigravity-container {
+.antigravity-container-smooth {
+    position: relative;
+    width: 100%;
+    /* Height is set dynamically based on number of sections */
+}
+
+.antigravity-viewport-smooth {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     overflow: hidden;
-    background: var(--bg-primary);
-    outline: none;
-}
-
-.antigravity-viewport {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    perspective: 1500px;
+    perspective: 1200px;
     perspective-origin: center center;
     transform-style: preserve-3d;
+    background: var(--bg-primary);
 }
 
-.antigravity-section {
+.antigravity-section-smooth {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transform-style: preserve-3d;
     will-change: transform, opacity, filter;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
-/* Active section styling */
-.antigravity-section.active {
-    z-index: 10;
+.antigravity-section-inner {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--bg-primary);
 }
 
-/* Content wrapper for proper scrolling within sections */
-.antigravity-section>* {
-    min-height: 100vh;
-}
-
-/* Hide scrollbar but allow scrolling within sections */
-.antigravity-section::-webkit-scrollbar {
+/* Hide scrollbar in sections */
+.antigravity-section-inner::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
 
-.antigravity-section {
+.antigravity-section-inner {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
+/* Padding for header */
+.antigravity-section-inner>section,
+.antigravity-section-inner>footer,
+.antigravity-section-inner>div {
+    padding-top: 80px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Hero sections don't need extra top padding */
+.antigravity-section-inner>.hero,
+.antigravity-section-inner>section:first-child {
+    padding-top: 0;
+}
+
 /* ========================================
-   SECTION INDICATORS
+   PROGRESS INDICATOR
    ======================================== */
 
-.antigravity-indicators {
+.antigravity-progress {
     position: fixed;
     right: var(--space-6);
     top: 50%;
@@ -73,50 +86,28 @@
     z-index: 100;
 }
 
-.antigravity-indicator {
-    width: 12px;
-    height: 12px;
+.antigravity-progress-dot {
+    width: 10px;
+    height: 10px;
     border-radius: var(--radius-full);
     border: 2px solid var(--border-color);
     background: transparent;
-    cursor: pointer;
     transition: all var(--transition-base);
-    padding: 0;
 }
 
-.antigravity-indicator:hover {
-    border-color: var(--accent-primary);
-    transform: scale(1.2);
-}
-
-.antigravity-indicator.active {
+.antigravity-progress-dot.active {
     background: var(--accent-gradient);
     border-color: var(--accent-primary);
     box-shadow: var(--glow-primary);
+    transform: scale(1.2);
 }
 
 /* ========================================
-   SECTION CONTENT ADJUSTMENTS
+   DEPTH AMBIANCE
    ======================================== */
 
-/* Ensure sections have proper padding for header */
-.antigravity-section section,
-.antigravity-section>div {
-    padding-top: 80px;
-    /* Account for fixed header */
-}
-
-/* First section hero doesn't need extra padding */
-.antigravity-section:first-child .hero {
-    padding-top: 0;
-}
-
-/* ========================================
-   DEPTH EFFECT ENHANCEMENTS
-   ======================================== */
-
-/* Subtle shadow on sections for depth */
-.antigravity-section::before {
+/* Subtle vignette for depth feel */
+.antigravity-viewport-smooth::after {
     content: '';
     position: absolute;
     top: 0;
@@ -124,28 +115,16 @@
     right: 0;
     bottom: 0;
     pointer-events: none;
-    z-index: -1;
-}
-
-/* Add subtle vignette effect for depth */
-.antigravity-container::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
     z-index: 50;
     background: radial-gradient(ellipse at center,
-            transparent 60%,
-            rgba(0, 0, 0, 0.1) 100%);
+            transparent 50%,
+            rgba(0, 0, 0, 0.15) 100%);
 }
 
-[data-theme="light"] .antigravity-container::after {
+[data-theme="light"] .antigravity-viewport-smooth::after {
     background: radial-gradient(ellipse at center,
-            transparent 60%,
-            rgba(0, 0, 0, 0.03) 100%);
+            transparent 50%,
+            rgba(0, 0, 0, 0.05) 100%);
 }
 
 /* ========================================
@@ -153,30 +132,31 @@
    ======================================== */
 
 @media (max-width: 768px) {
-    .antigravity-indicators {
+    .antigravity-progress {
         right: var(--space-3);
         gap: var(--space-2);
     }
 
-    .antigravity-indicator {
-        width: 10px;
-        height: 10px;
+    .antigravity-progress-dot {
+        width: 8px;
+        height: 8px;
     }
 
-    .antigravity-section section,
-    .antigravity-section>div {
+    .antigravity-section-inner>section,
+    .antigravity-section-inner>footer,
+    .antigravity-section-inner>div {
         padding-top: 70px;
     }
 }
 
 /* ========================================
-   REDUCED MOTION PREFERENCE
+   REDUCED MOTION
    ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
-    .antigravity-section {
-        transition: opacity 0.3s ease !important;
+    .antigravity-section-smooth {
         transform: none !important;
+        opacity: 1 !important;
         filter: none !important;
     }
 }
