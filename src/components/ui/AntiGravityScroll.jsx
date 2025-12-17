@@ -1,131 +1,102 @@
-import { useRef, useEffect, useState, Children } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useRef, Children } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import './AntiGravityScroll.css';
 
 /**
- * Anti-Gravity Scroll System - Continuous Version
+ * Anti-Gravity Scroll System - Card Stack Version
  * 
- * Premium scroll experience where sections transition smoothly in 3D depth.
- * Transitions are CONTINUOUS and tied directly to scroll position,
- * not discrete section-to-section jumps.
+ * - First section is always visible (no animation)
+ * - Next sections slide UP and COVER the previous section
+ * - Previous sections stay in place (don't fade/move)
+ * - Only incoming cards animate (fade in + slide up)
  */
 const AntiGravityScroll = ({ children }) => {
     const containerRef = useRef(null);
     const sections = Children.toArray(children);
     const totalSections = sections.length;
 
-    // Enable native scrolling - we'll use scroll position to drive transforms
     // Container height = sections * viewport height
     const containerHeight = `${totalSections * 100}vh`;
 
     return (
         <div
-            className="antigravity-container-smooth"
+            className="antigravity-stack-container"
             ref={containerRef}
             style={{ height: containerHeight }}
         >
-            <div className="antigravity-viewport-smooth">
-                {sections.map((section, index) => (
-                    <AntiGravitySection
-                        key={index}
-                        index={index}
-                        totalSections={totalSections}
-                        containerRef={containerRef}
-                    >
-                        {section}
-                    </AntiGravitySection>
-                ))}
-            </div>
+            {sections.map((section, index) => (
+                <StackingCard
+                    key={index}
+                    index={index}
+                    totalSections={totalSections}
+                    containerRef={containerRef}
+                    isFirst={index === 0}
+                >
+                    {section}
+                </StackingCard>
+            ))}
 
             {/* Progress Indicator */}
-            <ScrollProgress containerRef={containerRef} totalSections={totalSections} />
+            <ProgressDots containerRef={containerRef} totalSections={totalSections} />
         </div>
     );
 };
 
 /**
- * Individual section with scroll-driven 3D transforms
+ * Individual card that stacks over previous cards
  */
-const AntiGravitySection = ({ children, index, totalSections, containerRef }) => {
+const StackingCard = ({ children, index, totalSections, containerRef, isFirst }) => {
+    const cardRef = useRef(null);
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ['start start', 'end end'],
     });
 
-    // Calculate this section's scroll range (0 to 1 mapped to its portion)
-    const sectionStart = index / totalSections;
-    const sectionEnd = (index + 1) / totalSections;
-    const sectionMid = (sectionStart + sectionEnd) / 2;
+    // Calculate when this card should start/end animating
+    const cardStart = index / totalSections;
+    const cardEnd = (index + 1) / totalSections;
 
-    // Smooth spring for premium feel
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001,
-    });
+    // First card: always visible, no animation
+    // Other cards: slide up from below and cover the previous card
 
-    // Transform calculations for each section
-    // When scroll is at this section's range, it should be fully visible
-    // Before its range: below viewport, scaled down, blurred
-    // After its range: above viewport, scaled down, blurred, receded
-
-    // Y position: starts at 100% (below), moves to 0% (visible), then to -20% (receded above)
+    // Y position: starts at 100% (below viewport), moves to 0% (covers previous)
     const y = useTransform(
-        smoothProgress,
-        [sectionStart - 0.15, sectionStart, sectionMid, sectionEnd, sectionEnd + 0.15],
-        ['100%', '20%', '0%', '-10%', '-30%']
+        scrollYProgress,
+        [cardStart - 0.001, cardStart, cardEnd],
+        isFirst ? ['0%', '0%', '0%'] : ['100%', '0%', '0%']
     );
 
-    // Scale: starts small, becomes full at mid, shrinks as it recedes
-    const scale = useTransform(
-        smoothProgress,
-        [sectionStart - 0.15, sectionStart, sectionMid, sectionEnd, sectionEnd + 0.15],
-        [0.8, 0.9, 1, 0.95, 0.85]
-    );
-
-    // Opacity: fades in as it enters, fades out as it recedes
+    // Opacity: first card always 1, others fade in as they slide up
     const opacity = useTransform(
-        smoothProgress,
-        [sectionStart - 0.1, sectionStart, sectionMid, sectionEnd, sectionEnd + 0.1],
-        [0, 0.7, 1, 0.6, 0]
+        scrollYProgress,
+        [cardStart - 0.001, cardStart, cardStart + 0.15],
+        isFirst ? [1, 1, 1] : [0, 0.3, 1]
     );
 
-    // Z-axis (depth): comes forward then recedes
-    const z = useTransform(
-        smoothProgress,
-        [sectionStart - 0.15, sectionStart, sectionMid, sectionEnd, sectionEnd + 0.15],
-        [-200, -100, 0, -80, -250]
+    // Subtle scale for incoming cards (slightly smaller when entering)
+    const scale = useTransform(
+        scrollYProgress,
+        [cardStart, cardStart + 0.1],
+        isFirst ? [1, 1] : [0.95, 1]
     );
 
-    // Blur: sharp when active, blurred when entering/exiting
-    const blur = useTransform(
-        smoothProgress,
-        [sectionStart - 0.1, sectionStart + 0.05, sectionMid, sectionEnd - 0.05, sectionEnd + 0.1],
-        [12, 4, 0, 3, 10]
-    );
-
-    // Combine blur into filter string
-    const [filterValue, setFilterValue] = useState('blur(0px)');
-
-    useEffect(() => {
-        const unsubscribe = blur.on('change', (v) => {
-            setFilterValue(`blur(${Math.max(0, v)}px)`);
-        });
-        return unsubscribe;
-    }, [blur]);
+    // Z-index based on position - higher index = higher z-index
+    const zIndex = index + 1;
 
     return (
         <motion.div
-            className="antigravity-section-smooth"
+            ref={cardRef}
+            className="antigravity-stack-card"
             style={{
                 y,
-                scale,
                 opacity,
-                z,
-                filter: filterValue,
+                scale,
+                zIndex,
+                top: isFirst ? 0 : 0,
             }}
         >
-            <div className="antigravity-section-inner">
+            <div className="antigravity-stack-card-inner">
                 {children}
             </div>
         </motion.div>
@@ -133,42 +104,52 @@ const AntiGravitySection = ({ children, index, totalSections, containerRef }) =>
 };
 
 /**
- * Scroll progress indicator (optional visual feedback)
+ * Progress dots indicator
  */
-const ScrollProgress = ({ containerRef, totalSections }) => {
+const ProgressDots = ({ containerRef, totalSections }) => {
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ['start start', 'end end'],
     });
 
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-    });
-
-    // Calculate which section is currently most visible
-    const [activeIndex, setActiveIndex] = useState(0);
-
-    useEffect(() => {
-        const unsubscribe = smoothProgress.on('change', (v) => {
-            const newIndex = Math.min(
-                Math.floor(v * totalSections),
-                totalSections - 1
-            );
-            setActiveIndex(newIndex);
-        });
-        return unsubscribe;
-    }, [smoothProgress, totalSections]);
-
     return (
-        <div className="antigravity-progress">
+        <div className="antigravity-stack-dots">
             {Array.from({ length: totalSections }).map((_, index) => (
-                <div
+                <ProgressDot
                     key={index}
-                    className={`antigravity-progress-dot ${index === activeIndex ? 'active' : ''}`}
+                    index={index}
+                    totalSections={totalSections}
+                    scrollProgress={scrollYProgress}
                 />
             ))}
         </div>
+    );
+};
+
+const ProgressDot = ({ index, totalSections, scrollProgress }) => {
+    const isActive = useTransform(
+        scrollProgress,
+        (v) => {
+            const current = Math.floor(v * totalSections);
+            return current === index || (index === totalSections - 1 && v >= 0.99);
+        }
+    );
+
+    return (
+        <motion.div
+            className="antigravity-stack-dot"
+            style={{
+                backgroundColor: useTransform(isActive, (active) =>
+                    active ? 'var(--accent-primary)' : 'transparent'
+                ),
+                borderColor: useTransform(isActive, (active) =>
+                    active ? 'var(--accent-primary)' : 'var(--border-color)'
+                ),
+                boxShadow: useTransform(isActive, (active) =>
+                    active ? 'var(--glow-primary)' : 'none'
+                ),
+            }}
+        />
     );
 };
 

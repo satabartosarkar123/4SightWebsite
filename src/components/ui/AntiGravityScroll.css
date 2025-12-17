@@ -1,81 +1,64 @@
 /* ========================================
-   ANTI-GRAVITY SCROLL SYSTEM - SMOOTH
-   Continuous scroll-driven depth transitions
+   ANTI-GRAVITY SCROLL - CARD STACK
+   Cards slide up and cover previous cards
    ======================================== */
 
-.antigravity-container-smooth {
+.antigravity-stack-container {
     position: relative;
     width: 100%;
-    /* Height is set dynamically based on number of sections */
+    /* Height set dynamically: totalSections * 100vh */
 }
 
-.antigravity-viewport-smooth {
+.antigravity-stack-card {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    will-change: transform, opacity;
     overflow: hidden;
-    perspective: 1200px;
-    perspective-origin: center center;
-    transform-style: preserve-3d;
+}
+
+.antigravity-stack-card-inner {
+    width: 100%;
+    height: 100%;
     background: var(--bg-primary);
-}
-
-.antigravity-section-smooth {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-style: preserve-3d;
-    will-change: transform, opacity, filter;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-.antigravity-section-inner {
-    width: 100%;
-    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    background: var(--bg-primary);
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Hide scrollbar in sections */
-.antigravity-section-inner::-webkit-scrollbar {
+/* First card has no rounded corners at top */
+.antigravity-stack-card:first-child .antigravity-stack-card-inner {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Hide scrollbar in cards */
+.antigravity-stack-card-inner::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
 
-.antigravity-section-inner {
+.antigravity-stack-card-inner {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
 /* Padding for header */
-.antigravity-section-inner>section,
-.antigravity-section-inner>footer,
-.antigravity-section-inner>div {
-    padding-top: 80px;
+.antigravity-stack-card-inner>section,
+.antigravity-stack-card-inner>footer,
+.antigravity-stack-card-inner>div {
     min-height: 100vh;
     box-sizing: border-box;
 }
 
-/* Hero sections don't need extra top padding */
-.antigravity-section-inner>.hero,
-.antigravity-section-inner>section:first-child {
-    padding-top: 0;
-}
-
 /* ========================================
-   PROGRESS INDICATOR
+   PROGRESS DOTS
    ======================================== */
 
-.antigravity-progress {
+.antigravity-stack-dots {
     position: fixed;
     right: var(--space-6);
     top: 50%;
@@ -83,69 +66,43 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-    z-index: 100;
+    z-index: 1000;
 }
 
-.antigravity-progress-dot {
-    width: 10px;
-    height: 10px;
+.antigravity-stack-dot {
+    width: 12px;
+    height: 12px;
     border-radius: var(--radius-full);
     border: 2px solid var(--border-color);
     background: transparent;
-    transition: all var(--transition-base);
-}
-
-.antigravity-progress-dot.active {
-    background: var(--accent-gradient);
-    border-color: var(--accent-primary);
-    box-shadow: var(--glow-primary);
-    transform: scale(1.2);
+    transition: all 0.3s ease;
 }
 
 /* ========================================
-   DEPTH AMBIANCE
+   LIGHT MODE
    ======================================== */
 
-/* Subtle vignette for depth feel */
-.antigravity-viewport-smooth::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: 50;
-    background: radial-gradient(ellipse at center,
-            transparent 50%,
-            rgba(0, 0, 0, 0.15) 100%);
-}
-
-[data-theme="light"] .antigravity-viewport-smooth::after {
-    background: radial-gradient(ellipse at center,
-            transparent 50%,
-            rgba(0, 0, 0, 0.05) 100%);
+[data-theme="light"] .antigravity-stack-card-inner {
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* ========================================
-   MOBILE RESPONSIVENESS
+   MOBILE
    ======================================== */
 
 @media (max-width: 768px) {
-    .antigravity-progress {
+    .antigravity-stack-card-inner {
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    }
+
+    .antigravity-stack-dots {
         right: var(--space-3);
         gap: var(--space-2);
     }
 
-    .antigravity-progress-dot {
-        width: 8px;
-        height: 8px;
-    }
-
-    .antigravity-section-inner>section,
-    .antigravity-section-inner>footer,
-    .antigravity-section-inner>div {
-        padding-top: 70px;
+    .antigravity-stack-dot {
+        width: 10px;
+        height: 10px;
     }
 }
 
@@ -154,9 +111,8 @@
    ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
-    .antigravity-section-smooth {
+    .antigravity-stack-card {
         transform: none !important;
         opacity: 1 !important;
-        filter: none !important;
     }
 }
