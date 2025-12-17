@@ -6,4 +6,3 @@ export { default as Select } from './Select';
 export { default as Skeleton } from './Skeleton';
 export { default as Badge } from './Badge';
 export { default as ThemeToggle } from './ThemeToggle';
-export { default as StackingCards } from './StackingCards';
