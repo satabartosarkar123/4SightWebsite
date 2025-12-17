@@ -82,6 +82,13 @@
     border-radius: var(--radius-full);
 }
 
+/* Header Actions (Theme Toggle + Mobile Menu) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
 /* Mobile Menu Button */
 .mobile-menu-button {
     display: none;

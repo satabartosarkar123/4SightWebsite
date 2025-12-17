@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from './Header';
 import Footer from './Footer';
+import SocialSidebar from './SocialSidebar';
 import './MainLayout.css';
 
 const pageVariants = {
@@ -43,8 +44,10 @@ const MainLayout = () => {
                 </motion.main>
             </AnimatePresence>
             <Footer />
+            <SocialSidebar />
         </div>
     );
 };
 
 export default MainLayout;
+

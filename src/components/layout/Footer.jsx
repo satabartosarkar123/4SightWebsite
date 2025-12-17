@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Twitter, Linkedin, MessageCircle } from 'lucide-react';
 import './Footer.css';
 
 const footerLinks = {
@@ -21,10 +21,9 @@ const footerLinks = {
 };
 
 const socialLinks = [
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: Github, href: 'https://github.com', label: 'GitHub' },
-    { icon: Mail, href: 'mailto:contact@4sight.com', label: 'Email' },
+    { icon: Linkedin, href: 'https://linkedin.com/company/4sight', label: 'LinkedIn' },
+    { icon: MessageCircle, href: 'https://reddit.com/r/4sight', label: 'Reddit' },
+    { icon: Twitter, href: 'https://twitter.com/4sight', label: 'Twitter' },
 ];
 
 const Footer = () => {

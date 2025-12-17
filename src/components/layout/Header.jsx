@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ThemeToggle from '../ui/ThemeToggle';
 import './Header.css';
 
 const navLinks = [
@@ -51,15 +52,20 @@ const Header = () => {
                     ))}
                 </nav>
 
-                {/* Mobile Menu Button */}
-                <button
-                    className="mobile-menu-button"
-                    onClick={toggleMobileMenu}
-                    aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-                    aria-expanded={isMobileMenuOpen}
-                >
-                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                {/* Theme Toggle & Mobile Menu */}
+                <div className="header-actions">
+                    <ThemeToggle />
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="mobile-menu-button"
+                        onClick={toggleMobileMenu}
+                        aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+                        aria-expanded={isMobileMenuOpen}
+                    >
+                        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Navigation */}
