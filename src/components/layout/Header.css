@@ -56,19 +56,19 @@
     padding: var(--space-2) var(--space-4);
     font-size: var(--font-size-base);
     font-weight: var(--font-medium);
-    color: var(--text-secondary);
+    color: #ffffff;
     text-decoration: none;
     border-radius: var(--radius-md);
     transition: all var(--transition-base);
 }
 
 .nav-link:hover {
-    color: var(--text-primary);
+    color: #ffffff;
     background: var(--surface-glass);
 }
 
 .nav-link-active {
-    color: var(--text-primary);
+    color: #ffffff;
 }
 
 .nav-link-indicator {
@@ -119,14 +119,14 @@
     padding: var(--space-3) var(--space-4);
     font-size: var(--font-size-lg);
     font-weight: var(--font-medium);
-    color: var(--text-secondary);
+    color: #ffffff;
     text-decoration: none;
     border-radius: var(--radius-md);
     transition: all var(--transition-base);
 }
 
 .mobile-nav-link:hover {
-    color: var(--text-primary);
+    color: #ffffff;
     background: var(--surface-glass);
 }
 

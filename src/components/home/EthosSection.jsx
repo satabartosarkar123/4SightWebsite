@@ -1,33 +1,33 @@
 import { motion } from 'framer-motion';
-import { Zap, Target, Shield, TrendingUp } from 'lucide-react';
+import { Target, Rocket, Shield, TrendingUp } from 'lucide-react';
 import Card from '../ui/Card';
 import './EthosSection.css';
 
-// Static configuration - can be moved to config file later
+// SIGO Framework - Strategy, Implementation, Governance, Optimization
 const ethosStatements = [
     {
         id: 1,
-        icon: Zap,
-        title: 'Data-Led Automation',
-        description: 'Transform raw data into actionable intelligence with our cutting-edge automation solutions that learn and adapt to your business needs.',
+        icon: Target,
+        title: 'Strategy',
+        description: 'We believe in vision-first thinking. Every solution begins with a clear strategic roadmap that aligns technology with your business objectives.',
     },
     {
         id: 2,
-        icon: Shield,
-        title: 'Governance Transparency',
-        description: 'Enhance visibility into your organizational processes with comprehensive audit trails and real-time compliance monitoring.',
+        icon: Rocket,
+        title: 'Implementation',
+        description: 'Ideas are only as powerful as their execution. We deliver precision implementation that transforms strategic plans into tangible results.',
     },
     {
         id: 3,
-        icon: Target,
-        title: 'Strategic Alignment',
-        description: 'Align your operational metrics with strategic objectives through intelligent dashboards and predictive analytics.',
+        icon: Shield,
+        title: 'Governance',
+        description: 'Trust is built on transparency. Our governance framework ensures accountability, compliance, and ethical decision-making at every level.',
     },
     {
         id: 4,
         icon: TrendingUp,
-        title: 'Scalable Growth',
-        description: 'Build infrastructure that grows with your ambitions. Our solutions scale seamlessly from startup to enterprise.',
+        title: 'Optimization',
+        description: 'Excellence is a continuous journey. We embrace iterative improvement, leveraging data insights to constantly elevate performance.',
     },
 ];
 
