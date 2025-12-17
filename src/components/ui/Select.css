@@ -1,0 +1,97 @@
+/* ========================================
+   SELECT COMPONENT STYLES
+   ======================================== */
+
+.select-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.select-full {
+    width: 100%;
+}
+
+.select-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+.select-required {
+    color: var(--error);
+    margin-left: var(--space-1);
+}
+
+.select-container {
+    position: relative;
+}
+
+.select {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    padding-right: var(--space-10);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: var(--space-2);
+}
+
+.select:hover {
+    border-color: var(--border-hover);
+}
+
+.select:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.select-error {
+    border-color: var(--error);
+}
+
+.select-error:focus {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.select-icon {
+    position: absolute;
+    right: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    pointer-events: none;
+    transition: transform var(--transition-fast);
+}
+
+.select:focus~.select-icon {
+    color: var(--accent-primary);
+}
+
+.select-helper {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+}
+
+.select-helper-error {
+    color: var(--error);
+}
+
+.select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--bg-secondary);
+}

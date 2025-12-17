@@ -1,0 +1,118 @@
+/* ========================================
+   CARD COMPONENT STYLES
+   ======================================== */
+
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Variants */
+.card-default {
+    background: var(--bg-secondary);
+}
+
+.card-glass {
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.card-elevated {
+    background: var(--bg-tertiary);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-gradient {
+    background: linear-gradient(145deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+}
+
+/* Hover Effects */
+.card-hover:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.card-hover.card-glass:hover {
+    background: var(--surface-glass-hover);
+}
+
+/* Glow Effect */
+.card-glow {
+    box-shadow: var(--glow-primary);
+}
+
+.card-glow:hover {
+    box-shadow: var(--glow-primary), var(--shadow-xl);
+}
+
+/* Padding Variants */
+.card-padding-none {
+    padding: 0;
+}
+
+.card-padding-sm {
+    padding: var(--space-4);
+}
+
+.card-padding-md {
+    padding: var(--space-6);
+}
+
+.card-padding-lg {
+    padding: var(--space-8);
+}
+
+/* Clickable */
+.card-clickable {
+    cursor: pointer;
+}
+
+.card-clickable:active {
+    transform: translateY(-2px);
+}
+
+/* Border Gradient Effect */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 0%, transparent 100%);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.card-hover:hover::before {
+    background: var(--accent-gradient);
+    opacity: 0.5;
+}
+
+/* Card Header */
+.card-header {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--space-4);
+}
+
+/* Card Footer */
+.card-footer {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--space-4);
+}

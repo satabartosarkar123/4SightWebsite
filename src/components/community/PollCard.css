@@ -1,0 +1,98 @@
+/* ========================================
+   POLL CARD STYLES
+   ======================================== */
+
+.poll-card {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.poll-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.poll-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--accent-primary);
+}
+
+.poll-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+}
+
+/* Question */
+.poll-question {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-semibold);
+    line-height: var(--line-snug);
+    margin-bottom: var(--space-6);
+}
+
+/* Options */
+.poll-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.poll-option {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option-text {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+}
+
+.option-percentage {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+}
+
+.option-bar {
+    height: 8px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.option-bar-fill {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: var(--radius-full);
+}
+
+/* Footer */
+.poll-footer {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border-color);
+}
+
+.poll-votes {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+}

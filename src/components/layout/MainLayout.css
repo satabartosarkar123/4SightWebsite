@@ -1,0 +1,25 @@
+/* ========================================
+   MAIN LAYOUT STYLES
+   ======================================== */
+
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding-top: 73px;
+    /* Account for fixed header */
+}
+
+/* Ensure smooth scrolling on page transitions */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Page transition overlay prevention */
+.main-content>* {
+    min-height: calc(100vh - 73px);
+}

@@ -1,0 +1,58 @@
+/* ========================================
+   RESOURCE CARD STYLES
+   ======================================== */
+
+.resource-card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    height: 100%;
+}
+
+/* Header */
+.resource-header {
+    margin-bottom: var(--space-4);
+}
+
+.resource-header .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+/* Title */
+.resource-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-2);
+    line-height: var(--line-snug);
+}
+
+/* Description */
+.resource-description {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: var(--line-relaxed);
+    flex: 1;
+    margin-bottom: var(--space-4);
+}
+
+/* Footer */
+.resource-footer {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border-color);
+}
+
+.resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-medium);
+    color: var(--accent-primary);
+    transition: gap var(--transition-base);
+}
+
+.resource-card:hover .resource-link {
+    gap: var(--space-3);
+}

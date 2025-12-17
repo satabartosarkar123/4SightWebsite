@@ -1,0 +1,70 @@
+/* ========================================
+   FEATURE CARD STYLES
+   ======================================== */
+
+.feature-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gradient Border on Hover */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 0%, transparent 100%);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.feature-card:hover::before {
+    background: var(--accent-gradient);
+    opacity: 0.6;
+}
+
+/* Icon */
+.feature-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: var(--radius-xl);
+    color: var(--accent-primary);
+    margin-bottom: var(--space-5);
+    transition: all var(--transition-base);
+}
+
+.feature-card:hover .feature-icon-wrapper {
+    background: var(--accent-gradient);
+    color: var(--text-primary);
+    transform: scale(1.05) rotate(5deg);
+}
+
+/* Title */
+.feature-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-3);
+}
+
+/* Description */
+.feature-description {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: var(--line-relaxed);
+}
