@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
-import { Calculator, LineChart, FileSearch, Wrench, Bot, Database } from 'lucide-react';
+import { Calculator, LineChart, FileSearch, Bot } from 'lucide-react';
 import { PollCard, ToolCard, ResourceCard } from '../components/community';
+import { AntiGravityScroll } from '../components/ui';
+import { Footer } from '../components/layout';
 import './CommunityPage.css';
 
 // Mock data - would come from backend in production
@@ -93,119 +95,134 @@ const resources = [
     },
 ];
 
+// Hero Section
+const CommunityHero = () => (
+    <section className="community-hero">
+        <div className="community-hero-container">
+            <motion.h1
+                className="community-hero-title"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+            >
+                Community <span className="text-gradient">Hub</span>
+            </motion.h1>
+            <motion.p
+                className="community-hero-subtitle"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+            >
+                Connect, learn, and grow with the 4Sight community
+            </motion.p>
+        </div>
+    </section>
+);
+
+// Polls Section
+const PollsSection = () => (
+    <section className="community-section">
+        <div className="community-section-container">
+            <motion.div
+                className="section-header"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+            >
+                <h2 className="section-title">Community Polls</h2>
+                <p className="section-subtitle">See what the community is thinking</p>
+            </motion.div>
+
+            <div className="polls-grid">
+                {polls.map((poll, index) => (
+                    <PollCard
+                        key={poll.id}
+                        question={poll.question}
+                        options={poll.options}
+                        totalVotes={poll.totalVotes}
+                        index={index}
+                    />
+                ))}
+            </div>
+        </div>
+    </section>
+);
+
+// Tools Section
+const ToolsSection = () => (
+    <section className="community-section community-section-alt">
+        <div className="community-section-container">
+            <motion.div
+                className="section-header"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+            >
+                <h2 className="section-title">Free Tools</h2>
+                <p className="section-subtitle">Helpful tools for your automation journey</p>
+            </motion.div>
+
+            <div className="tools-grid">
+                {tools.map((tool, index) => (
+                    <ToolCard
+                        key={tool.id}
+                        name={tool.name}
+                        description={tool.description}
+                        icon={tool.icon}
+                        url={tool.url}
+                        comingSoon={tool.comingSoon}
+                        index={index}
+                    />
+                ))}
+            </div>
+        </div>
+    </section>
+);
+
+// Resources Section
+const ResourcesSection = () => (
+    <section className="community-section">
+        <div className="community-section-container">
+            <motion.div
+                className="section-header"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+            >
+                <h2 className="section-title">Resources</h2>
+                <p className="section-subtitle">Guides, videos, and templates to help you succeed</p>
+            </motion.div>
+
+            <div className="resources-grid">
+                {resources.map((resource, index) => (
+                    <ResourceCard
+                        key={resource.id}
+                        title={resource.title}
+                        description={resource.description}
+                        type={resource.type}
+                        url={resource.url}
+                        index={index}
+                    />
+                ))}
+            </div>
+        </div>
+    </section>
+);
+
 const CommunityPage = () => {
     return (
-        <div className="community-page">
-            {/* Hero */}
-            <section className="community-hero">
-                <div className="community-hero-container">
-                    <motion.h1
-                        className="community-hero-title"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        Community <span className="text-gradient">Hub</span>
-                    </motion.h1>
-                    <motion.p
-                        className="community-hero-subtitle"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                    >
-                        Connect, learn, and grow with the 4Sight community
-                    </motion.p>
-                </div>
-            </section>
-
-            {/* Polls Section */}
-            <section className="community-section">
-                <div className="community-section-container">
-                    <motion.div
-                        className="section-header"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <h2 className="section-title">Community Polls</h2>
-                        <p className="section-subtitle">See what the community is thinking</p>
-                    </motion.div>
-
-                    <div className="polls-grid">
-                        {polls.map((poll, index) => (
-                            <PollCard
-                                key={poll.id}
-                                question={poll.question}
-                                options={poll.options}
-                                totalVotes={poll.totalVotes}
-                                index={index}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Tools Section */}
-            <section className="community-section community-section-alt">
-                <div className="community-section-container">
-                    <motion.div
-                        className="section-header"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <h2 className="section-title">Free Tools</h2>
-                        <p className="section-subtitle">Helpful tools for your automation journey</p>
-                    </motion.div>
-
-                    <div className="tools-grid">
-                        {tools.map((tool, index) => (
-                            <ToolCard
-                                key={tool.id}
-                                name={tool.name}
-                                description={tool.description}
-                                icon={tool.icon}
-                                url={tool.url}
-                                comingSoon={tool.comingSoon}
-                                index={index}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Resources Section */}
-            <section className="community-section">
-                <div className="community-section-container">
-                    <motion.div
-                        className="section-header"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <h2 className="section-title">Resources</h2>
-                        <p className="section-subtitle">Guides, videos, and templates to help you succeed</p>
-                    </motion.div>
-
-                    <div className="resources-grid">
-                        {resources.map((resource, index) => (
-                            <ResourceCard
-                                key={resource.id}
-                                title={resource.title}
-                                description={resource.description}
-                                type={resource.type}
-                                url={resource.url}
-                                index={index}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
-        </div>
+        <AntiGravityScroll>
+            <CommunityHero />
+            <PollsSection />
+            <ToolsSection />
+            <ResourcesSection />
+            <Footer />
+        </AntiGravityScroll>
     );
 };
 
 export default CommunityPage;
+
