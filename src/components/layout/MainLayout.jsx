@@ -1,24 +1,53 @@
 import { Outlet } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import Header from './Header';
+import Footer from './Footer';
 import SocialSidebar from './SocialSidebar';
 import './MainLayout.css';
 
-/**
- * MainLayout wraps all pages.
- * Note: Footer is not included here because anti-gravity sections
- * handle the full viewport. Footer content should be included
- * as the last section in each page's AntiGravityScroll.
- */
+const pageVariants = {
+    initial: {
+        opacity: 0,
+        y: 20,
+    },
+    animate: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.4,
+            ease: 'easeOut',
+        },
+    },
+    exit: {
+        opacity: 0,
+        y: -20,
+        transition: {
+            duration: 0.3,
+            ease: 'easeIn',
+        },
+    },
+};
+
 const MainLayout = () => {
     return (
         <div className="main-layout">
             <Header />
-            <main className="main-content">
-                <Outlet />
-            </main>
+            <AnimatePresence mode="wait">
+                <motion.main
+                    className="main-content"
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                >
+                    <Outlet />
+                </motion.main>
+            </AnimatePresence>
+            <Footer />
             <SocialSidebar />
         </div>
     );
 };
 
 export default MainLayout;
+

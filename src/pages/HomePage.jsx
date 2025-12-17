@@ -1,17 +1,13 @@
 import { HeroSection, EthosSection, ContactForm } from '../components/home';
-import { Footer } from '../components/layout';
-import { AntiGravityScroll } from '../components/ui';
 
 const HomePage = () => {
     return (
-        <AntiGravityScroll>
+        <div className="home-page">
             <HeroSection />
             <EthosSection />
             <ContactForm />
-            <Footer />
-        </AntiGravityScroll>
+        </div>
     );
 };
 
 export default HomePage;
-
