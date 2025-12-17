@@ -1,0 +1,55 @@
+/* ========================================
+   STACKING CARDS EFFECT
+   ======================================== */
+
+.stacking-cards-container {
+    position: relative;
+    width: 100%;
+}
+
+.stacking-card {
+    position: sticky;
+    width: 100%;
+    min-height: 100vh;
+    transform-origin: center top;
+    will-change: transform, opacity;
+}
+
+.stacking-card-inner {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg-primary);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    box-shadow:
+        0 -10px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 1px var(--border-color);
+}
+
+/* First card doesn't need rounded top corners */
+.stacking-card:first-child .stacking-card-inner {
+    border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+}
+
+/* Light mode adjustments */
+[data-theme="light"] .stacking-card-inner {
+    box-shadow:
+        0 -10px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px var(--border-color);
+}
+
+/* Smooth out the section backgrounds */
+.stacking-card section {
+    background: transparent !important;
+}
+
+/* Mobile: reduce stacking offset */
+@media (max-width: 768px) {
+    .stacking-card-inner {
+        border-radius: var(--radius-xl);
+    }
+
+    .stacking-card:first-child .stacking-card-inner {
+        border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    }
+}
