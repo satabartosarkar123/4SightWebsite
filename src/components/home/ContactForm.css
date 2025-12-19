@@ -4,8 +4,34 @@
 
 .contact-section {
     padding: var(--space-24) 0;
-    background: var(--bg-secondary);
+    background: var(--bg-primary);
     position: relative;
+    overflow: hidden;
+}
+
+/* Purple Gradient Orbs */
+.contact-section::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, transparent 60%);
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.contact-section::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    right: 15%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.54) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
 }
 
 .contact-container {

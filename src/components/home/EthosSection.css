@@ -4,12 +4,12 @@
 
 .ethos-section {
     padding: var(--space-24) 0;
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
     position: relative;
     overflow: hidden;
 }
 
-/* Orange/Amber Gradient Orbs - All directions + center */
+/* Purple Gradient Orbs - All directions + center */
 .ethos-section::before {
     content: '';
     position: absolute;
@@ -18,7 +18,7 @@
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(251, 146, 60, 0.18) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.54) 0%, transparent 60%);
     filter: blur(80px);
     pointer-events: none;
 }
@@ -30,7 +30,7 @@
     left: -10%;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(251, 146, 60, 0.22) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.66) 0%, transparent 70%);
     filter: blur(60px);
     pointer-events: none;
 }
@@ -50,7 +50,7 @@
     right: -15%;
     width: 350px;
     height: 350px;
-    background: radial-gradient(circle, rgba(245, 158, 11, 0.20) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.60) 0%, transparent 70%);
     filter: blur(50px);
     pointer-events: none;
 }
@@ -62,7 +62,7 @@
     left: -15%;
     width: 350px;
     height: 350px;
-    background: radial-gradient(circle, rgba(234, 88, 12, 0.18) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.54) 0%, transparent 70%);
     filter: blur(50px);
     pointer-events: none;
 }
